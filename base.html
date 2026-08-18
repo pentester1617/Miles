@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MILES — Connect freely. Speak anonymously.">
+  <title>{% block title %}MILES{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('main.index') }}">MILES<span>.</span></a>
+  {% if current_user.is_authenticated %}
+  <nav>
+    <a href="{{ url_for('main.home') }}">Home</a>
+    <a href="{{ url_for('main.discover') }}">Discover</a>
+    <a href="{{ url_for('main.inbox') }}">Inbox</a>
+    <a href="{{ url_for('main.notifications') }}">Alerts</a>
+    {% if current_user.role == "admin" %}<a href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
+    <a href="{{ url_for('main.profile', username=current_user.username) }}">@{{ current_user.username }}</a>
+    <form action="{{ url_for('auth.logout') }}" method="post" class="inline"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Logout</button></form>
+  </nav>
+  {% endif %}
+</header>
+<main class="page">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

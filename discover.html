@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Discover · MILES{% endblock %}{% block content %}
+<div class="section-head"><div><div class="eyebrow">Discover</div><h1>Find people</h1></div></div>
+<form class="search" method="get"><input name="q" value="{{ q }}" placeholder="Search username…"><button class="btn primary">Search</button></form>
+<div class="user-grid">
+{% for user in users %}
+<a class="user-card" href="{{ url_for('main.profile', username=user.username) }}"><div class="avatar">{{ user.username[0]|upper }}</div><div><strong>@{{ user.username }}</strong><p>{{ user.bio or "No bio yet." }}</p></div></a>
+{% else %}<div class="empty">Search for a username to begin.</div>{% endfor %}
+</div>{% endblock %}

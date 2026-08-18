@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}MILES — Connect freely{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="eyebrow">A new way to connect</div>
+  <h1>Connect freely.<br><span>Speak anonymously.</span></h1>
+  <p>MILES lets you find people, build connections, and start conversations with control over how your identity appears.</p>
+  <div class="actions"><a class="btn primary" href="{{ url_for('auth.signup') }}">Create your MILES</a><a class="btn ghost" href="{{ url_for('auth.login') }}">Log in</a></div>
+</section>
+<section class="feature-grid">
+  <article><b>01</b><h3>Find your people</h3><p>Discover MILES users by username and build connections.</p></article>
+  <article><b>02</b><h3>Choose your identity</h3><p>Send identified messages or use Anonymous Mode when you want the recipient-facing identity hidden.</p></article>
+  <article><b>03</b><h3>Stay in control</h3><p>Block, report, and manage your profile from one private space.</p></article>
+</section>
+<div class="notice"><strong>Privacy by design.</strong> Anonymous Mode hides your identity from the recipient interface. MILES does not claim anonymous messages are technically untraceable.</div>
+{% endblock %}

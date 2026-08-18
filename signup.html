@@ -1,0 +1,8 @@
+{% extends "auth_shell.html" %}{% block title %}Create account · MILES{% endblock %}{% block auth %}
+<div class="eyebrow">Join MILES</div><h1>Create your account</h1><p class="muted">Choose a username people can find you by.</p>
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label>Username<input name="username" autocomplete="username" required maxlength="30" placeholder="your_username"></label>
+<label>Password<input type="password" name="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters"></label>
+<button class="btn primary full">Create account</button></form>
+<p class="center muted">Already here? <a href="{{ url_for('auth.login') }}">Log in</a></p>
+{% endblock %}

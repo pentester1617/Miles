@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Message @{{ recipient.username }} · MILES{% endblock %}{% block content %}
+<div class="chat">
+<div class="chat-head"><a href="{{ url_for('main.profile', username=recipient.username) }}">←</a><div class="avatar">{{ recipient.username[0]|upper }}</div><div><strong>@{{ recipient.username }}</strong><p>Conversation</p></div></div>
+<div class="messages">
+{% for m in messages %}
+<div class="bubble {{ 'mine' if m.sender_id == current_user.id else 'theirs' }}"><div class="message-meta">{{ "You" if m.sender_id == current_user.id else ("Anonymous" if m.is_anonymous else "@"+recipient.username) }}</div><div>{{ m.body }}</div><small>{{ m.created_at.strftime('%d %b %Y, %H:%M') }}</small>
+{% if m.recipient_id == current_user.id %}<details><summary>Report</summary><form method="post" action="{{ url_for('main.report_message', message_id=m.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><select name="reason"><option>Harassment</option><option>Spam</option><option>Threatening</option><option>Other</option></select><button class="btn danger">Report</button></form></details>{% endif %}
+</div>
+{% else %}<div class="empty">No messages yet. Start the conversation.</div>{% endfor %}
+</div>
+<form method="post" class="composer"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><textarea name="body" maxlength="2000" required placeholder="Write something…"></textarea><div class="compose-row"><label class="toggle"><input type="checkbox" name="anonymous" value="1"> <span>Anonymous Mode</span></label><button class="btn primary">Send</button></div><p class="tiny">Anonymous Mode hides your account identity from the recipient interface; it does not make a message technically untraceable.</p></form>
+</div>{% endblock %}

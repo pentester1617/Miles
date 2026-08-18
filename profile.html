@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}@{{ user.username }} · MILES{% endblock %}{% block content %}
+<div class="profile-card">
+  <div class="avatar large">{{ user.username[0]|upper }}</div>
+  <div class="profile-main"><div class="eyebrow">MILES profile</div><h1>@{{ user.username }}</h1><p>{{ user.bio or "Keeping it mysterious." }}</p>
+  <div class="stats"><span><b>{{ followers }}</b> followers</span><span><b>{{ following_count }}</b> following</span></div></div>
+  {% if user.id != current_user.id %}
+  <div class="profile-actions">
+    {% if not blocked %}<form method="post" action="{{ url_for('main.follow', username=user.username) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn primary">{{ "Connected" if following else "Connect" }}</button></form>
+    <a class="btn ghost" href="{{ url_for('main.message', username=user.username) }}">Message</a>
+    <form method="post" action="{{ url_for('main.block', username=user.username) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn danger">Block</button></form>
+    {% else %}<form method="post" action="{{ url_for('main.unblock', username=user.username) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn ghost">Unblock</button></form>{% endif %}
+  </div>
+  {% else %}<a class="btn ghost" href="{{ url_for('main.edit_profile') }}">Edit profile</a>{% endif %}
+</div>
+{% if user.id != current_user.id and not blocked %}<details class="report"><summary>Report this user</summary><form method="post" action="{{ url_for('main.report_user', username=user.username) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><select name="reason"><option>Spam</option><option>Harassment</option><option>Impersonation</option><option>Other</option></select><textarea name="details" maxlength="500" placeholder="Optional details"></textarea><button class="btn danger">Submit report</button></form></details>{% endif %}
+{% endblock %}

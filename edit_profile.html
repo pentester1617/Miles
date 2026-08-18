@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Edit profile · MILES{% endblock %}{% block content %}
+<div class="form-card"><div class="eyebrow">Your identity</div><h1>Edit profile</h1><form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label>Username<input value="@{{ current_user.username }}" disabled></label>
+<label>Bio<textarea name="bio" maxlength="280" placeholder="Tell people a little about you…">{{ current_user.bio }}</textarea></label>
+<label>Avatar URL<input name="avatar" maxlength="255" value="{{ current_user.avatar }}" placeholder="https://…"></label>
+<button class="btn primary">Save profile</button></form></div>{% endblock %}

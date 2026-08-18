@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Home · MILES{% endblock %}{% block content %}
+<div class="dashboard-head"><div><div class="eyebrow">Your space</div><h1>Welcome, @{{ current_user.username }}</h1><p class="muted">Where will the next conversation lead?</p></div><a class="btn primary" href="{{ url_for('main.discover') }}">Find people</a></div>
+<div class="home-grid">
+  <a class="panel big" href="{{ url_for('main.discover') }}"><span>DISCOVER</span><h2>Meet someone new.</h2><p>Search the MILES network by username.</p></a>
+  <a class="panel" href="{{ url_for('main.inbox') }}"><span>MESSAGES</span><h2>Open your inbox.</h2><p>Continue your conversations.</p></a>
+  <a class="panel" href="{{ url_for('main.notifications') }}"><span>ALERTS</span><h2>{{ unread }} unread</h2><p>See connections and messages.</p></a>
+</div>
+{% endblock %}
